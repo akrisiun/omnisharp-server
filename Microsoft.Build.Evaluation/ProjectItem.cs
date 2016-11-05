@@ -14,6 +14,7 @@ namespace Microsoft.Build.Evaluation
         {
             Element = element;
         }
+        
         public string EvaluatedInclude
         {
             get
@@ -25,10 +26,12 @@ namespace Microsoft.Build.Evaluation
                 return System.Uri.UnescapeDataString(value);
             }
         }
+
         public bool HasMetadata(string name)
         {
             return Element.Descendants(Element.Document.Root.Name.Namespace + name).Any();
         }
+        
         public string GetMetadataValue(string name)
         {
             return Element.Descendants(Element.Document.Root.Name.Namespace + name).First().Value;

@@ -22,6 +22,7 @@ public class Test
         }
 
         [Test]
+        // Failed Win10-x64
         public void Should_LookupInt2()
         {
             @"

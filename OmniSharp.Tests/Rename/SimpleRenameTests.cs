@@ -108,6 +108,7 @@ namespace OmniSharp.Tests.Rename
         }
 
         [Test]
+        // Failed Win10-x64
         public void Should_rename_method()
         {
             Rename(
@@ -292,6 +293,7 @@ public class Handler
         }
 
         [Test]
+        // Failed Win10-x64
         public void Should_not_rename_wrong_overloads()
         {
             Rename(@"

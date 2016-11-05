@@ -6,13 +6,13 @@ using System.Threading;
 using ICSharpCode.NRefactory.Documentation;
 using ICSharpCode.NRefactory.Semantics;
 using ICSharpCode.NRefactory.TypeSystem;
-using Monodoc;
+// using Monodoc;
 
 namespace MonoDevelop.Projects
 {
     public static class HelpService
     {
-        static RootTree helpTree;
+        // static RootTree helpTree;
         static bool helpTreeInitialized;
         static object helpTreeLock = new object();
         static HashSet<string> sources = new HashSet<string>();
@@ -59,7 +59,9 @@ namespace MonoDevelop.Projects
 
                     //foreach (var s in sources)
                     //    helpTree.AddSource(s);
+#if MONODOC
                     helpTree = RootTree.LoadTree(sources.First());
+#endif
 
                 }
                 catch (Exception ex)
@@ -77,6 +79,7 @@ namespace MonoDevelop.Projects
             }
         }
 
+#if MONODOC
         /// <summary>
         /// A MonoDoc docs tree.
         /// </summary>
@@ -96,6 +99,7 @@ namespace MonoDevelop.Projects
                 }
             }
         }
+#endif
 
         /// <summary>
         /// Whether the MonoDoc docs tree has finished loading.
@@ -129,12 +133,14 @@ namespace MonoDevelop.Projects
                 string namespc = ((NamespaceResolveResult)result).NamespaceName;
                 //verify that the namespace exists in the help tree
                 //FIXME: GetHelpXml doesn't seem to work for namespaces, so forced to do full render
+#if MONODOC
                 Monodoc.Node dummy;
 #pragma warning disable 612,618
                 if (!String.IsNullOrEmpty(namespc) && HelpTree != null && HelpTree.RenderUrl("N:" + namespc, out dummy) != null)
 #pragma warning restore 612,618
                     return "N:" + namespc;
                 else
+#endif
                     return null;
             }
 
@@ -148,6 +154,7 @@ namespace MonoDevelop.Projects
             if (member != null && member.GetMonodocDocumentation() != null)
                 return member.GetIdString();
 
+#if MONODOC
             var type = result.Type;
             if (type != null && !String.IsNullOrEmpty(type.FullName))
             {
@@ -157,7 +164,7 @@ namespace MonoDevelop.Projects
 #pragma warning restore 612,618
                     return t;
             }
-
+#endif
             return null;
         }
     }

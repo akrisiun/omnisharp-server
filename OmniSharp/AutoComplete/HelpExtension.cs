@@ -128,6 +128,9 @@ namespace MonoDevelop.Projects
 
         public static XmlNode GetMonodocDocumentation(this IEntity member)
         {
+#if !MONODOC
+            return null;
+#else
 			if (member.SymbolKind == SymbolKind.TypeDefinition)
             {
 #pragma warning disable 612,618
@@ -143,8 +146,7 @@ namespace MonoDevelop.Projects
 #pragma warning restore 612,618
             if (declaringXml == null)
                 return null;
-
-			switch (member.SymbolKind)
+            switch (member.SymbolKind)
             {
 			case SymbolKind.Method:
                     {
@@ -171,7 +173,7 @@ namespace MonoDevelop.Projects
                 default:
                     return declaringXml.SelectSingleNode("/Type/Members/Member[@MemberName='" + member.Name + "']/Docs");
             }
+#endif
         }
-
     }
 }

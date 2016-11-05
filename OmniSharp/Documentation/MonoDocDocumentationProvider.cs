@@ -34,6 +34,8 @@ using System.Text;
 
 namespace MonoDevelop.Ide.TypeSystem
 {
+#if MONODOC
+
     [Serializable]
     public class MonoDocDocumentationProvider : IDocumentationProvider
     {
@@ -234,4 +236,6 @@ namespace MonoDevelop.Ide.TypeSystem
 
 
     }
+#endif
+
 }

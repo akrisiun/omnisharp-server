@@ -15,8 +15,10 @@ namespace OmniSharp.Documentation
 
         public static IDocumentationProvider Get(IProject project, string assemblyName)
         {
+#if MONODOC
             if (PlatformService.IsUnix)
                 return new MonoDocDocumentationProvider();
+#endif
 
             if (_providers.ContainsKey(assemblyName))
                 return _providers[assemblyName];
